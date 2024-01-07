@@ -1,0 +1,1 @@
+pyinstaller  -F .\main.py --add-data "C:\Users\hcr\AppData\Local\Programs\Python\Python312\Lib\site-packages\tkinterDnD;tkinterDnD"
