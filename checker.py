@@ -235,13 +235,6 @@ def __Uniq(colValus,args,env):
     else:
         return True,""
 
-def __Column(colValus, args, env):
-    tData = env.table.getFile(args[0])
-    if(tData.empty):
-        return False, f"文件:[{env.curFileName}] Column:文件不存在,请检查配置:{args}"
-
-
-    pass
 EMPTY = pd.DataFrame([])
 def __In(colValus,args,env):
     #如果没有配置,说明不关心,所以要先移除 NA
@@ -257,8 +250,12 @@ def __In(colValus,args,env):
         tData = env.table.getFile(args[0])
         if(tData.empty):
             return False, f"文件:[{env.curFileName}] IN:文件不存在,请检查配置:{args}"
-
-        tData = tData.get(args[1],EMPTY)
+        if(args[1] == "*"):
+            #print("=====args", args, tData.columns)
+            tData = tData.columns
+            pass
+        else:
+            tData = tData.get(args[1],EMPTY)
 
     if(tData.empty):
         return False, f"文件:[{env.curFileName}] 验证列不存在,请查看配置:{args}"
@@ -304,5 +301,4 @@ funs = {
         "Range":__Range,
         "IN"   :__In,
         "Uniq" :__Uniq,
-        "Column":__Column,
 }
