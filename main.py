@@ -27,9 +27,18 @@
 import checkerRun
 import layout
 import guicontrol
-
+import argparse
+parse = argparse.ArgumentParser(
+        prog="Excel Checker",
+        description="check Excel by Rules")
+parse.add_argument('mode', default="gui", choices=["gui","cmd"])
+parse.add_argument('-f', nargs="*", default=[])
+args = parse.parse_args()
 ctrl = guicontrol.GUIControler()
 gui = layout.Win(ctrl)
 cr = checkerRun.CheckerRun(ctrl)
+
+if(args.mode == 'cmd'):
+    includeFile = None if len(args.f) == 0 else args.f
+    cr.checkByRules(includeFile)
 gui.mainloop()
-#cr.checkByRules()
