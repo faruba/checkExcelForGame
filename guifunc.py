@@ -42,7 +42,6 @@ def selectPath(pvar):
         pvar.set(path_)
 
 def openPath(pvar):
-
     path = pvar.get()
     try:
         if sys.platform == 'darwin':
@@ -57,6 +56,20 @@ def openPath(pvar):
     except:
         print('Could not open file ' + path)
 
+def svnUp(workDir):
+    try:
+        if sys.platform == 'darwin':
+            subprocess.check_call(["svn", "up"],cwd=workDir)
+        elif sys.platform.startswith('linux'):
+            subprocess.check_call(["svn", "up"],cwd=workDir)
+        elif sys.platform in ['windows', 'win32']:
+            subprocess.check_call(["tortoiseProc", "/command:update", f'/path:"{workDir}' ,"/closeonend:2"],cwd=workDir)
+        else:
+            print('Unknown platform, cannot svn up')
+    except Exception as e:
+        print('无法用svn更新 ', e, workDir)
+
+
     #print(dir)
 def createPthWidget(root, reason, pStrVar, pos, env):
     Label(root, text=reason).grid(row=pos, column=0)
@@ -66,6 +79,7 @@ def createPthWidget(root, reason, pStrVar, pos, env):
 _createFunc = {
         "path" : lambda parent, cfg, pos, env: createPthWidget(parent, cfg["reason"], env.var(cfg["var"]), pos, env)
 }
+    
 def createDialog(parent, cfg, env):
     window = Toplevel(parent)
     for i in range(len(cfg)):

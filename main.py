@@ -23,7 +23,6 @@
 # guifunc.py 一些比较通用的函数.感觉其他工具可以用得到
 
 # main.py 载入环境,运行 checkerRun.
-
 import checkerRun
 import layout
 import guicontrol
@@ -31,7 +30,7 @@ import argparse
 parse = argparse.ArgumentParser(
         prog="Excel Checker",
         description="check Excel by Rules")
-parse.add_argument('mode', default="gui", choices=["gui","cmd"])
+parse.add_argument('-mode', default="gui", choices=["gui","cmd"])
 parse.add_argument('-f', nargs="*", default=[])
 args = parse.parse_args()
 ctrl = guicontrol.GUIControler()

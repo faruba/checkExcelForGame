@@ -228,6 +228,17 @@ def __Type(colValus, args, env):
 
 def __Uniq(colValus,args,env):
     # Logical operators for Boolean indexing in Pandas
+    #print("----------?", args)
+    try:
+        if(len(args) > 0):
+            df = env.curTableData
+            temp = df[args[0]]
+            for idx  in range(1,len(args)):
+                temp = temp.astype(str).str.cat(df[args[idx]].astype(str), sep='_')
+            colValus = temp
+    except Exception as e:
+        return False, f"文件:[{env.curFileName}] Unip 组合:{args} 出错:{e}"
+    #print("===========??", colValus)
     dupVals = colValus.value_counts()[colValus.value_counts() > 1]
     isDup = len(dupVals) >= 1
     if(isDup):

@@ -94,7 +94,10 @@ class GUIControler:
         self.cfg = checker.cfg
         self.checker = checker
         self.__bindVar()
-
+        self. __updateRuleBySvn()
+    def __updateRuleBySvn(self):
+        rulesDir = self.cfg.rules()
+        gi.svnUp(rulesDir)
     def append(self,reason, arg, msg):
         v = self.layout.tk_progressbar_process["value"]
         #print("========log", reason, arg,msg)
